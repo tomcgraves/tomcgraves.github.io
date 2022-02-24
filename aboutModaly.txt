@@ -1,0 +1,46 @@
+﻿Modaly
+
+
+A music player where you create the music in your head.
+
+
+The images we “see” when we look at clouds, and the patterns we discern in fire, water and other natural phenomena spring from random patterns of matter, transformed by our minds. Modaly attempts to do this with musical notes.
+
+
+Modality is a very old concept in music, dating back hundreds of years and still present in all forms of today’s music. Similar to scales, modes create “moods”, generally by including major or minor scale tones.
+
+
+In Modaly, notes are chosen at random from modal arrays of notes, in groups of 3, 4, 5, 6, 7, 8,9,12 and 16 notes. The patterns create time signatures and the groups are repeated. When you hear a group of randomly-selected modal notes repeated, it creates a melody, so the randomness disappears and music occurs, created by your own musical sensibilities.
+
+
+When an Instrument Type is chosen, an available instrument of that type can be selected. The instrument playback can be turned off, leaving the percussion playing alone, or the percussion can be turned off, leaving only the instrument.
+
+
+The Percussion selection comprises 16 sets of drum sounds, natural and synthetic. The beats are triggered along with the instrument notes, but because they are drums they mostly don’t have pitches.
+
+
+Below the percussion selection is the Play button which turns it on and off, and below that is the sleep timer selector: ⏲️
+
+
+Near the top is a “hamburger” button that opens an Options window for specific control parameters. The sliders that control Tempo, Volume & Duration are self-explanatory.  The Time Signature selector allows the selection of the various note-groupings, i.e.how many notes are selected to be repeated. The common ones, 3, 4, 6, & 8 create patterns that establish themselves easily, the others less so.
+
+
+There are 4 choices for Modality: Major, Minor, Pentatonic, and Chromatic. All except Chromatic create harmonious, melodic snippets. Chromatic mode sounds dissonant, as does much of modern music. Who am I to judge?
+
+
+Harmonic Density allows a choice between a stream of single notes and various levels of harmonization. The harmonies, while also random, are controlled by rules of harmony and the constraints of the current modality.
+
+
+Drum Solo turns the instrument off and on after every group pattern has played. If percussion is disabled, silence follows the instrument pattern.
+
+
+Custom Presets: If a configuration has been created that one would like to keep, enter a name for it in the text box and click Save Custom Preset. All the current parameters will be saved. These named presets will be itemized above the button, and the X allows for deletion.
+
+
+The x on the top right of the page takes you back to the home screen, where the Presets are selectable. I have included several. Try them. Modify them. Save your custom versions.  Please try to listen through real speakers, as the sound systems contained in phones or laptop computers are woefully inadequate. Note that newer versions of Chrome have a “Share” icon in the address bar. One option should be “Cast…” and using that the audio can be directed to any audio device that supports Chromecast, an ubiquitous technology for redirecting media streams from phones and computers.
+
+
+This is a work in progress. I’m open to all suggestions and critiques. Email me and I’ll send you updates as we build them.
+
+
+tgraves@gmail.com
