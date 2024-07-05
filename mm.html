@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mastermind Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+            background-color: #f0f0f0;
+        }
+        #game-container {
+            max-width: 600px;
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .guess-input {
+            margin: 5px 0;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .color-box {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+            margin: 0 2px;
+        }
+        .color-R { background: red; }
+        .color-G { background: green; }
+        .color-B { background: blue; }
+        .color-O { background: orange; }
+        .color-Y { background: yellow; }
+        .color-K { background: black; }
+        .color-W { background: white; border: 1px solid #ccc; }
+        #guess-history {
+            margin-top: 20px;
+            text-align: left;
+        }
+        #guess-history table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        #guess-history th, #guess-history td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        #restart-button {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <h1>Mastermind Game</h1>
+        <p>Colors: R (Red), G (Green), B (Blue), O (Orange), Y (Yellow), W (White)</p>
+        <p>Provide feedback as a combination of B (Black) and W (White).</p>
+        <div id="current-guess"></div>
+        <div>
+            <input type="text" id="feedback" class="guess-input" placeholder="Enter feedback (e.g., BBW)">
+            <button onclick="submitFeedback()">Submit Feedback</button>
+        </div>
+        <div id="result"></div>
+        <div id="guess-history"></div>
+        <button id="restart-button" onclick="restartGame()">Restart Game</button>
+    </div>
+
+    <script>
+        const colors = ['R', 'G', 'B', 'O', 'Y', 'W'];
+        let possibleCodes, currentGuess, guessCounter;
+
+        function generateAllPossibleCodes(colors, length) {
+            if (length === 1) return colors.map(color => [color]);
+            const allCodes = [];
+            const shorterCodes = generateAllPossibleCodes(colors, length - 1);
+            for (const color of colors) {
+                for (const code of shorterCodes) {
+                    allCodes.push([color, ...code]);
+                }
+            }
+            return allCodes;
+        }
+
+        function getNextGuess() {
+            if (possibleCodes.length === 0) {
+                return [];
+            }
+            return possibleCodes[Math.floor(Math.random() * possibleCodes.length)];
+        }
+
+        function provideFeedback(guess, feedback) {
+            const black = (feedback.match(/B/g) || []).length;
+            const white = (feedback.match(/W/g) || []).length;
+
+            possibleCodes = possibleCodes.filter(code => {
+                const codeCopy = [...code];
+                const guessCopy = [...guess];
+                let tempBlack = 0;
+                let tempWhite = 0;
+
+                // Check for Black pegs
+                for (let i = 0; i < 4; i++) {
+                    if (codeCopy[i] === guessCopy[i]) {
+                        tempBlack++;
+                        codeCopy[i] = null;
+                        guessCopy[i] = null;
+                    }
+                }
+
+                // Check for White pegs
+                for (let i = 0; i < 4; i++) {
+                    if (guessCopy[i] !== null) {
+                        const index = codeCopy.indexOf(guessCopy[i]);
+                        if (index !== -1) {
+                            tempWhite++;
+                            codeCopy[index] = null;
+                        }
+                    }
+                }
+
+                return tempBlack === black && tempWhite === white;
+            });
+        }
+
+        function submitFeedback() {
+            const feedback = document.getElementById('feedback').value.trim();
+            if (!feedback.match(/^[BW]*$/)) {
+                alert('Invalid feedback. Use only B and W.');
+                return;
+            }
+
+            console.log(`Current Guess: ${currentGuess.join('')}`);
+            console.log(`Feedback: ${feedback}`);
+            console.log(`Possible Codes Before Feedback: ${possibleCodes.length}`);
+
+            provideFeedback(currentGuess, feedback);
+
+            console.log(`Possible Codes After Feedback: ${possibleCodes.length}`);
+            console.log(`Possible Codes: ${JSON.stringify(possibleCodes)}`);
+
+            const guessHistory = document.getElementById('guess-history').querySelector('tbody');
+            const guessRow = document.createElement('tr');
+            guessRow.innerHTML = `
+                <td>${guessCounter}</td>
+                <td>${currentGuess.map(c => `<div class="color-box color-${c}"></div>`).join('')}</td>
+                <td>${Array.from(feedback).map(f => `<div class="color-box color-${f === 'B' ? 'K' : 'W'}"></div>`).join('')}</td>`;
+            guessHistory.appendChild(guessRow);
+
+            guessCounter++;
+            currentGuess = getNextGuess();
+
+            if (currentGuess.length === 0) {
+                document.getElementById('result').innerText = 'I have exhausted all possible guesses!';
+                document.getElementById('current-guess').innerHTML = '';
+            } else {
+                document.getElementById('result').innerText = '';
+                document.getElementById('current-guess').innerHTML = `Next Guess: ${currentGuess.map(c => `<div class="color-box color-${c}"></div>`).join('')}`;
+            }
+
+            document.getElementById('feedback').value = '';
+            document.getElementById('feedback').focus();
+        }
+
+        function restartGame() {
+            possibleCodes = generateAllPossibleCodes(colors, 4);
+            currentGuess = ['R', 'R', 'B', 'B'];
+            guessCounter = 1;
+            document.getElementById('current-guess').innerHTML = `Next Guess: ${currentGuess.map(c => `<div class="color-box color-${c}"></div>`).join('')}`;
+            document.getElementById('result').innerText = '';
+            document.getElementById('guess-history').innerHTML = `<table><thead><tr><th>#</th><th>Guess</th><th>Feedback</th></tr></thead><tbody></tbody></table>`;
+        }
+
+        // Initial setup
+        restartGame();
+    </script>
+</body>
+</html>
