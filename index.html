@@ -1836,6 +1836,27 @@ SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
         min-height: 100vh;
       }
     </style>
+    <style id="mobile-fit">
+      /* Shrink the landing page to fit a phone screen without scrolling.
+         Mobile-only (max-width: 600px); desktop layout is unchanged. */
+      @media (max-width: 600px) {
+        /* Trim oversized vertical padding on the main + footer sections */
+        section {
+          padding-top: 14px !important;
+          padding-bottom: 14px !important;
+        }
+        /* Tighten the top navigation bar */
+        nav {
+          padding-top: 12px !important;
+          padding-bottom: 12px !important;
+        }
+        /* Cap the hero (cloud) image height */
+        section:first-of-type img {
+          max-height: 150px !important;
+          object-fit: cover !important;
+        }
+      }
+    </style>
   </head>
   <body class="x x-fonts-league-spartan x-fonts-lato">
     <div
